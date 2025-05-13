@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- This page was shamelessly generated with Google Gemini 2.5 Flash :^) -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -253,13 +252,13 @@
             initSpheres(); // Re-initialize sphere positions
         });
 
-        const NUM_SPHERES = 15;
-        const MIN_RADIUS = 30;
-        const MAX_RADIUS = 80;
+        const NUM_SPHERES = 25;
+        const MIN_RADIUS = 20;
+        const MAX_RADIUS = 120;
         const MIN_SPEED = 0.1;
-        const MAX_SPEED = 0.5;
+        const MAX_SPEED = 0.8;
         const FADE_SPEED = 0.005; // Speed of alpha change
-        const BLUR_AMOUNT = 8; // Pixels of blur
+        const BLUR_AMOUNT = 14; // Pixels of blur
 
         let spheres = [];
 
@@ -298,7 +297,7 @@
                 this.radius = this.initialRadius;
                 this.alpha = 0; // Start invisible
                 this.state = 'fading-in'; // Initial state
-                this.color = `173, 216, 230`; // RGB values for light blue (lightblue)
+                this.color = `11, 27, 33`; // RGB values for dark blue
                 this.sizeChangeSpeed = (Math.random() - 0.5) * 0.001; // Slight size variation
             }
 

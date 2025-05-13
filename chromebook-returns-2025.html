@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- This page was shamelessly generated with Google Gemini 2.5 Flash :^) -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chromebook Returns</title>
+    <!-- Import Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Lato&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Define the background base color */
+            --background-base-color: #012b49;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            font-family: 'Lato', sans-serif;
+            color: white; /* Default text color */
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            box-sizing: border-box;
+            background-color: var(--background-base-color); /* Fallback/base color */
+            line-height: 1.2;
+        }
+
+        /* Increase base font size on wider screens */
+        @media (min-width: 1001px) {
+            body {
+                font-size: 1.8em;
+            }
+        }
+
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place canvas behind content */
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            width: 100%; /* Take full width */
+
+            box-sizing: border-box;
+            text-align: center; /* Center the banner */
+             /* Remove background */
+            background-color: transparent;
+            border-radius: 0; /* Remove border radius */
+        }
+
+         /* Responsive padding */
+         @media (max-width: 768px) {
+             .content-container {
+                 padding: 10px;
+             }
+         }
+
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 5px;
+            font-size: 5rem; /* Make it larger */
+            margin-bottom: 0;
+            color: white;
+            text-transform: uppercase; /* All caps */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Stronger glow */
+            display: inline-block; /* Needed for centering ::after */
+            position: relative; /* Needed for absolute positioning of ::after */
+        }
+
+        /* Underline effect using pseudo-element */
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 50%; /* Start from center */
+            bottom: 0px; /* Position below text */
+            transform: translateX(-50%); /* Center horizontally */
+            width: 95%; /* Make it narrower than text */
+            height: 2px; /* Underline thickness */
+            background-color: white; /* Underline color */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow for underline */
+        }
+
+         @media (max-width: 768px) {
+             h1 {
+                 font-size: 3em; /* Adjust size on smaller screens */
+                 margin-bottom: 15px;
+             }
+             h1::after {
+                 bottom: -5px; /* Adjust underline position */
+                 height: 1px; /* Adjust thickness */
+             }
+         }
+
+
+        #clock {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            font-family: 'Lato', sans-serif;
+            color: white;
+            z-index: 2;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Brighter glow */
+        }
+
+         @media (max-width: 768px) {
+             #clock {
+                 top: 10px;
+                 right: 10px;
+                 font-size: 1em;
+             }
+         }
+
+        .columns-container {
+            display: flex;
+            justify-content: center; /* Center the columns */
+            gap: 40px; /* Space between columns */
+            flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+            padding: 0 20px; /* Add horizontal padding to prevent columns touching edges */
+            max-width: 1400px;
+            margin: auto;
+        }
+
+         @media (max-width: 768px) {
+             .columns-container {
+                 padding: 0 10px; /* Adjust padding on smaller screens */
+             }
+         }
+
+
+        .column {
+            flex: 1 1 400px;
+            text-align: left; /* Align text left */
+            padding: 0; /* Remove padding here, handled by container */
+            box-sizing: border-box;
+            min-width: 280px; /* Prevent columns from getting too small */
+        }
+
+        @media (max-width: 768px) {
+            .columns-container {
+                flex-direction: column; /* Stack columns on smaller screens */
+                gap: 20px;
+            }
+            .column {
+                width: 100%; /* Full width on smaller screens */
+                max-width: none;
+            }
+        }
+
+        .column ul {
+            list-style: none; /* Remove default bullet points */
+            padding-left: 0; /* Remove default padding */
+        }
+
+        .column li {
+            margin-bottom: 8px;
+            padding-left: 1.2em; /* Space for the star */
+            position: relative;
+        }
+
+        .column li::before {
+            content: "★"; /* Add the star bullet point */
+            color: #ffd700; /* A golden color for the star */
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Basic Lorem Ipsum Content */
+        .column p {
+            margin-bottom: 15px;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="backgroundCanvas"></canvas>
+
+    <div id="clock"></div>
+
+    <div class="content-container">
+        <h1>Chromebook Returns</h1>
+
+        <div class="columns-container">
+            <div class="column">
+                <p style="font-size: 1.5em; font-weight: 700">Return your device to the IT Help Desk on your last exam day.
+                <ul>
+                    <li>Seniors must return by <b>Friday, May 16th</b>.<br>
+                        <i>Make sure to bring your access card!</i>
+                    </li>
+                    <li>9th-11th: return directly after your last exam, before <b>Thursday, May 22nd at 12:30PM</li>
+                </ul>
+                <p style="color: #ffd700"><b>AVOID A $25 LATE FEE</b> by returning your device on time, fully charged, with stylus and charger.
+                <p><b>Summer school students</b>: you must bring your device for inspection. It will be returned to you.
+            </div>
+            <div class="column">
+                <p style="font-size: 2em; color: #ffd700">DO NOT LEAVE UNTIL WE HAVE EXAMINED YOUR DEVICE</b>
+            </div>
+        </div>
+	<h2>Please ring the bell for assistance.</h2>
+    </div>
+
+    <script>
+        // Clock functionality (same as before)
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            const minutesPadded = minutes < 10 ? '0' + minutes : minutes;
+            const secondsPadded = seconds < 10 ? '0' + seconds : seconds;
+
+            const timeString = `${hours}:${minutesPadded}:${secondsPadded} ${ampm}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+
+        // Canvas Background Animation (Blurred Spheres)
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            // Spheres will reposition randomly on resize
+            initSpheres(); // Re-initialize sphere positions
+        });
+
+        const NUM_SPHERES = 15;
+        const MIN_RADIUS = 30;
+        const MAX_RADIUS = 80;
+        const MIN_SPEED = 0.1;
+        const MAX_SPEED = 0.5;
+        const FADE_SPEED = 0.005; // Speed of alpha change
+        const BLUR_AMOUNT = 8; // Pixels of blur
+
+        let spheres = [];
+
+        class Sphere {
+            constructor() {
+                this.reset(); // Initialize with random properties
+            }
+
+            reset() {
+                 // Start spheres off-screen or near edges
+                const edge = Math.random(); // 0-0.25 top, 0.25-0.5 right, 0.5-0.75 bottom, 0.75-1 left
+                if (edge < 0.25) { // Top
+                    this.x = Math.random() * width;
+                    this.y = -MAX_RADIUS;
+                    this.speedY = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
+                    this.speedX = (Math.random() - 0.5) * (MAX_SPEED); // Move left or right
+                } else if (edge < 0.5) { // Right
+                    this.x = width + MAX_RADIUS;
+                    this.y = Math.random() * height;
+                    this.speedX = -(MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED));
+                     this.speedY = (Math.random() - 0.5) * (MAX_SPEED); // Move up or down
+                } else if (edge < 0.75) { // Bottom
+                    this.x = Math.random() * width;
+                    this.y = height + MAX_RADIUS;
+                    this.speedY = -(MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED));
+                     this.speedX = (Math.random() - 0.5) * (MAX_SPEED); // Move left or right
+                } else { // Left
+                    this.x = -MAX_RADIUS;
+                    this.y = Math.random() * height;
+                    this.speedX = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
+                     this.speedY = (Math.random() - 0.5) * (MAX_SPEED); // Move up or down
+                }
+
+
+                this.initialRadius = MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
+                this.radius = this.initialRadius;
+                this.alpha = 0; // Start invisible
+                this.state = 'fading-in'; // Initial state
+                this.color = `173, 216, 230`; // RGB values for light blue (lightblue)
+                this.sizeChangeSpeed = (Math.random() - 0.5) * 0.001; // Slight size variation
+            }
+
+            update() {
+                // Update position
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Update alpha based on state
+                if (this.state === 'fading-in') {
+                    this.alpha += FADE_SPEED;
+                    if (this.alpha >= 0.6) { // Fade up to a certain opacity
+                        this.alpha = 0.6;
+                        this.state = 'idle';
+                    }
+                } else if (this.state === 'fading-out') {
+                    this.alpha -= FADE_SPEED;
+                    if (this.alpha <= 0) {
+                        this.alpha = 0;
+                        this.reset(); // Reset position and start fading in again
+                    }
+                } else if (this.state === 'idle') {
+                     // Check if sphere is off-screen to start fading out
+                     if (this.x + this.radius < 0 || this.x - this.radius > width ||
+                         this.y + this.radius < 0 || this.y - this.radius > height) {
+                         this.state = 'fading-out';
+                     }
+                     // Slightly change size
+                     this.radius += this.sizeChangeSpeed;
+                     if (this.radius > MAX_RADIUS * 1.2 || this.radius < MIN_RADIUS * 0.8) {
+                         this.sizeChangeSpeed *= -1; // Reverse size change direction
+                     }
+                }
+            }
+
+            draw(ctx) {
+                if (this.alpha <= 0) return; // Don't draw if invisible
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+
+                // Apply blur filter before filling
+                ctx.filter = `blur(${BLUR_AMOUNT}px)`;
+
+                // Fill with color and current alpha
+                ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+                ctx.fill();
+
+                // Reset filter after drawing
+                ctx.filter = 'none';
+            }
+        }
+
+        function initSpheres() {
+             spheres = []; // Clear existing spheres
+             for (let i = 0; i < NUM_SPHERES; i++) {
+                 spheres.push(new Sphere());
+             }
+              // Make sure some spheres are visible initially
+             spheres.forEach(sphere => {
+                  sphere.x = Math.random() * width;
+                  sphere.y = Math.random() * height;
+                  sphere.alpha = 0.6; // Start visible
+                  sphere.state = 'idle';
+             });
+        }
+
+
+        function animateSpheres() {
+            // Draw gradient background
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#012b49'); // Dark base blue
+            gradient.addColorStop(1, '#004075'); // Slightly lighter blue
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Update and draw spheres
+            spheres.forEach(sphere => {
+                sphere.update();
+                sphere.draw(ctx);
+            });
+
+            requestAnimationFrame(animateSpheres);
+        }
+
+        // Initialize and start animation
+        initSpheres();
+        animateSpheres();
+
+    </script>
+
+</body>
+</html>

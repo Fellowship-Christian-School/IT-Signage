@@ -25,8 +25,16 @@
             padding-top: 50px;
             box-sizing: border-box;
             background-color: var(--background-base-color); /* Fallback/base color */
+            background-image: repeating-linear-gradient(to bottom right, #0000, #0001, #0000, #0000f, #0000);
+            background-size: 800% 800%;
+            animation: gradientMovement 40s linear infinite; /* Slow animation */
             line-height: 1.2;
         }
+
+        @keyframes gradientMovement {
+		0% { background-position: 0% 0%; }
+		100% { background-position: 100% 100%; }
+	}
 
         /* Increase base font size on wider screens */
         @media (min-width: 1001px) {
@@ -187,8 +195,6 @@
 </head>
 <body>
 
-    <canvas id="backgroundCanvas"></canvas>
-
     <div id="clock"></div>
 
     <div class="content-container">
@@ -208,13 +214,13 @@
             </div>
             <div class="column">
                 <p style="font-size: 2em; color: #ffd700">DO NOT LEAVE UNTIL WE HAVE EXAMINED YOUR DEVICE</b>
+		<p style="font-size: 1.5em"><b>Seniors</b>: make sure to bring your access card.</p>
             </div>
         </div>
 	<h2>Please ring the bell for assistance.</h2>
     </div>
 
     <script>
-        // Clock functionality (same as before)
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
@@ -232,161 +238,6 @@
 
         setInterval(updateClock, 1000);
         updateClock();
-
-
-        // Canvas Background Animation (Blurred Spheres)
-        const canvas = document.getElementById('backgroundCanvas');
-        const ctx = canvas.getContext('2d');
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-
-        canvas.width = width;
-        canvas.height = height;
-
-        window.addEventListener('resize', () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            // Spheres will reposition randomly on resize
-            initSpheres(); // Re-initialize sphere positions
-        });
-
-        const NUM_SPHERES = 25;
-        const MIN_RADIUS = 20;
-        const MAX_RADIUS = 120;
-        const MIN_SPEED = 0.1;
-        const MAX_SPEED = 0.8;
-        const FADE_SPEED = 0.005; // Speed of alpha change
-        const BLUR_AMOUNT = 14; // Pixels of blur
-
-        let spheres = [];
-
-        class Sphere {
-            constructor() {
-                this.reset(); // Initialize with random properties
-            }
-
-            reset() {
-                 // Start spheres off-screen or near edges
-                const edge = Math.random(); // 0-0.25 top, 0.25-0.5 right, 0.5-0.75 bottom, 0.75-1 left
-                if (edge < 0.25) { // Top
-                    this.x = Math.random() * width;
-                    this.y = -MAX_RADIUS;
-                    this.speedY = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-                    this.speedX = (Math.random() - 0.5) * (MAX_SPEED); // Move left or right
-                } else if (edge < 0.5) { // Right
-                    this.x = width + MAX_RADIUS;
-                    this.y = Math.random() * height;
-                    this.speedX = -(MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED));
-                     this.speedY = (Math.random() - 0.5) * (MAX_SPEED); // Move up or down
-                } else if (edge < 0.75) { // Bottom
-                    this.x = Math.random() * width;
-                    this.y = height + MAX_RADIUS;
-                    this.speedY = -(MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED));
-                     this.speedX = (Math.random() - 0.5) * (MAX_SPEED); // Move left or right
-                } else { // Left
-                    this.x = -MAX_RADIUS;
-                    this.y = Math.random() * height;
-                    this.speedX = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED);
-                     this.speedY = (Math.random() - 0.5) * (MAX_SPEED); // Move up or down
-                }
-
-
-                this.initialRadius = MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
-                this.radius = this.initialRadius;
-                this.alpha = 0; // Start invisible
-                this.state = 'fading-in'; // Initial state
-                this.color = `11, 27, 33`; // RGB values for dark blue
-                this.sizeChangeSpeed = (Math.random() - 0.5) * 0.001; // Slight size variation
-            }
-
-            update() {
-                // Update position
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // Update alpha based on state
-                if (this.state === 'fading-in') {
-                    this.alpha += FADE_SPEED;
-                    if (this.alpha >= 0.6) { // Fade up to a certain opacity
-                        this.alpha = 0.6;
-                        this.state = 'idle';
-                    }
-                } else if (this.state === 'fading-out') {
-                    this.alpha -= FADE_SPEED;
-                    if (this.alpha <= 0) {
-                        this.alpha = 0;
-                        this.reset(); // Reset position and start fading in again
-                    }
-                } else if (this.state === 'idle') {
-                     // Check if sphere is off-screen to start fading out
-                     if (this.x + this.radius < 0 || this.x - this.radius > width ||
-                         this.y + this.radius < 0 || this.y - this.radius > height) {
-                         this.state = 'fading-out';
-                     }
-                     // Slightly change size
-                     this.radius += this.sizeChangeSpeed;
-                     if (this.radius > MAX_RADIUS * 1.2 || this.radius < MIN_RADIUS * 0.8) {
-                         this.sizeChangeSpeed *= -1; // Reverse size change direction
-                     }
-                }
-            }
-
-            draw(ctx) {
-                if (this.alpha <= 0) return; // Don't draw if invisible
-
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-
-                // Apply blur filter before filling
-                ctx.filter = `blur(${BLUR_AMOUNT}px)`;
-
-                // Fill with color and current alpha
-                ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-                ctx.fill();
-
-                // Reset filter after drawing
-                ctx.filter = 'none';
-            }
-        }
-
-        function initSpheres() {
-             spheres = []; // Clear existing spheres
-             for (let i = 0; i < NUM_SPHERES; i++) {
-                 spheres.push(new Sphere());
-             }
-              // Make sure some spheres are visible initially
-             spheres.forEach(sphere => {
-                  sphere.x = Math.random() * width;
-                  sphere.y = Math.random() * height;
-                  sphere.alpha = 0.6; // Start visible
-                  sphere.state = 'idle';
-             });
-        }
-
-
-        function animateSpheres() {
-            // Draw gradient background
-            const gradient = ctx.createLinearGradient(0, 0, width, height);
-            gradient.addColorStop(0, '#012b49'); // Dark base blue
-            gradient.addColorStop(1, '#004075'); // Slightly lighter blue
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, width, height);
-
-            // Update and draw spheres
-            spheres.forEach(sphere => {
-                sphere.update();
-                sphere.draw(ctx);
-            });
-
-            requestAnimationFrame(animateSpheres);
-        }
-
-        // Initialize and start animation
-        initSpheres();
-        animateSpheres();
-
     </script>
 
 </body>

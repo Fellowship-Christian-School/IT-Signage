@@ -25,7 +25,7 @@
             padding-top: 50px;
             box-sizing: border-box;
             background-color: var(--background-base-color); /* Fallback/base color */
-            background-image: repeating-linear-gradient(to bottom right, #0000, #0001, #0000, #0000f, #0000);
+            background-image: repeating-radial-gradient( #0000, #0004, #0cf5, #fff4, #0000)
             background-size: 800% 800%;
             animation: gradientMovement 40s linear infinite; /* Slow animation */
             line-height: 1.2;
@@ -33,7 +33,10 @@
 
         @keyframes gradientMovement {
 		0% { background-position: 0% 0%; }
-		100% { background-position: 100% 100%; }
+		25% { background-position: 100% 0%; }
+		50% { background-position: 100% 100%; }
+		75% { background-position: 0% 100%; }
+		100% { background-position: 0% 0%; }
 	}
 
         /* Increase base font size on wider screens */
